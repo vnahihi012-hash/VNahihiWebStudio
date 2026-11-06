@@ -22,73 +22,107 @@ st.markdown("""
     </head>
 """, unsafe_allow_html=True)
 
-# 2. Tùy chỉnh CSS Dark Mode cao cấp, dịu mắt, chống chóng mặt
-dark_mode_style = """
+# 2. CSS Nâng cấp Pro Studio (Thiết kế lại toàn bộ giao diện cho đỡ chán đời)
+pro_studio_style = """
     <style>
-    /* Ẩn menu và header mặc định của Streamlit */
+    /* Ẩn header và footer mặc định */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
 
-    /* Đồng bộ màu nền toàn trang sang tông tối dịu mắt */
+    /* Tổng thể nền Studio tối sâu thẳm, sang trọng */
     .stApp {
-        background-color: #0b0f19;
-        color: #e6edf3;
+        background-color: #090d16;
+        color: #f3f4f6;
+        font-family: 'Inter', sans-serif;
     }
     
-    /* Sidebar */
+    /* Sidebar thiết kế chuyên nghiệp dạng kính mờ */
     [data-testid="stSidebar"] {
-        background-color: #111827;
-        border-right: 1px solid #1f2937;
+        background-color: #0f172a;
+        border-right: 1px solid #1e293b;
+    }
+    [data-testid="stSidebar"] .stRadio label {
+        color: #e2e8f0 !important;
+        font-weight: 500;
     }
 
-    /* Các khối Card giao diện Studio */
+    /* Các khối Studio Card dạng nổi khối hiện đại */
     .studio-card {
-        background: #161e2e;
-        padding: 24px;
-        border-radius: 14px;
-        border: 1px solid #2d3748;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #131c31 0%, #0f172a 100%);
+        padding: 28px;
+        border-radius: 16px;
+        border: 1px solid #1e293b;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
     }
     
     .studio-header {
-        font-size: 26px;
-        font-weight: 700;
-        color: #f9fafb;
-        margin-bottom: 6px;
+        font-size: 28px;
+        font-weight: 800;
+        background: linear-gradient(90deg, #60a5fa, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
     }
     
     .studio-sub {
-        color: #9ca3af;
-        font-size: 14px;
+        color: #94a3b8;
+        font-size: 15px;
         margin-bottom: 24px;
     }
 
-    /* Tùy chỉnh tab */
+    /* Tùy chỉnh các Tab chuyển đổi mượt mà */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background-color: #111827;
-        padding: 6px;
-        border-radius: 10px;
+        gap: 10px;
+        background-color: #0f172a;
+        padding: 8px;
+        border-radius: 12px;
+        border: 1px solid #1e293b;
     }
     .stTabs [data-baseweb="tab"] {
-        height: 40px;
-        color: #9ca3af;
-        border-radius: 6px;
+        height: 44px;
+        color: #94a3b8;
+        border-radius: 8px;
         font-weight: 600;
+        background-color: transparent;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #ffffff;
+        background-color: #1e293b;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #3b82f6 !important;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
         color: white !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Tùy chỉnh nút bấm (Buttons) bắt mắt hơn */
+    .stButton button {
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    
+    /* Khu vực File Uploader */
+    [data-testid="stFileUploader"] {
+        background-color: #0f172a;
+        border: 2px dashed #334155;
+        border-radius: 12px;
+        padding: 20px;
+    }
+    [data-testid="stFileUploader"]:hover {
+        border-color: #3b82f6;
     }
     </style>
 """
-st.markdown(dark_mode_style, unsafe_allow_html=True)
+st.markdown(pro_studio_style, unsafe_allow_html=True)
 
 # --- SIDEBAR ĐIỀU HƯỞNG ---
 st.sidebar.markdown("### 🎬 VNahihi Hub")
-st.sidebar.caption("Creator Studio v2.5 - Dark Edition")
+st.sidebar.caption("Pro Video Studio v2.5")
 
 menu = st.sidebar.radio(
     "🧭 Điều hướng",
@@ -117,7 +151,7 @@ if st.sidebar.button("📁 Mở Thư Mục Ứng Dụng", use_container_width=Tr
 if menu == "🎬 Không gian Sáng tạo (Studio)":
     
     st.markdown('<div class="studio-header">🎬 VNahihi Studio - Biên Tập & Xử Lý Video AI</div>', unsafe_allow_html=True)
-    st.markdown('<div class="studio-sub">Hệ thống xử lý video chuyên nghiệp. Giao diện tối ưu hóa chống mỏi mắt, thao tác mượt mà.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="studio-sub">Hệ thống xử lý video thông minh chuẩn Studio. Thao tác mượt mà, giao diện hiện đại.</div>', unsafe_allow_html=True)
 
     tab_upload, tab_link, tab_sub_editor, tab_tts, tab_marketing = st.tabs([
         "📤 1. Tải Lên Media", 
@@ -332,7 +366,7 @@ elif menu == "⚙️ Cài đặt Hệ thống":
     st.markdown('<div class="studio-header">⚙️ Cài đặt Hệ thống VNahihi Studio</div>', unsafe_allow_html=True)
     st.markdown('<div class="studio-card">', unsafe_allow_html=True)
     st.write("- **Thương hiệu:** VNahihi AI Studio")
-    st.write("- **Phiên bản:** v2.5 Dark Edition")
+    st.write("- **Phiên bản:** v2.5 Pro Studio Edition")
     st.write("- **Vị trí lưu trữ:** `C:\\AppDichVideo`")
     st.write("- **Bộ giải mã Video:** FFmpeg (libx264, CRF 18)")
     st.write("- **Công cụ AI:** OpenAI Whisper & Edge-TTS")
