@@ -8,121 +8,111 @@ import edge_tts
 
 # 1. Cấu hình trang & Thương hiệu VNahihi
 st.set_page_config(
-    page_title="VNahihi - AI Video Studio",
+    page_title="VNahihi - Pro Video Studio",
     page_icon="🎬",
     layout="wide"
 )
 
-# Chèn thẻ Meta HTML cho chia sẻ liên kết
-st.markdown("""
-    <head>
-        <meta property="title" content="VNahihi - AI Video Studio">
-        <meta property="og:title" content="VNahihi - AI Video Studio">
-        <meta property="og:description" content="Hệ thống biên tập và xử lý video thông minh VNahihi Studio">
-    </head>
-""", unsafe_allow_html=True)
-
-# 2. CSS Nâng cấp Pro Studio (Thiết kế lại toàn bộ giao diện cho đỡ chán đời)
-pro_studio_style = """
+# 2. CSS Tối ưu hóa tuyệt đối: Xóa sạch rườm rà, giao diện phẳng mượt mà cao cấp
+clean_studio_style = """
     <style>
-    /* Ẩn header và footer mặc định */
+    /* Ẩn hoàn toàn các thành phần mặc định của Streamlit */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
 
-    /* Tổng thể nền Studio tối sâu thẳm, sang trọng */
+    /* Nền tổng thể tối sâu, sang trọng */
     .stApp {
-        background-color: #090d16;
+        background-color: #0b0f19;
         color: #f3f4f6;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    /* Sidebar thiết kế chuyên nghiệp dạng kính mờ */
+    /* Thanh Sidebar tối giản phong cách Desktop App */
     [data-testid="stSidebar"] {
         background-color: #0f172a;
         border-right: 1px solid #1e293b;
+        padding-top: 20px;
     }
     [data-testid="stSidebar"] .stRadio label {
-        color: #e2e8f0 !important;
+        color: #cbd5e1 !important;
         font-weight: 500;
+        font-size: 15px;
     }
 
-    /* Các khối Studio Card dạng nổi khối hiện đại */
+    /* Thẻ Studio Card chuẩn hiện đại, không bị lỗi khối */
     .studio-card {
-        background: linear-gradient(135deg, #131c31 0%, #0f172a 100%);
-        padding: 28px;
-        border-radius: 16px;
-        border: 1px solid #1e293b;
-        margin-bottom: 24px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        background: #111827;
+        padding: 24px;
+        border-radius: 14px;
+        border: 1px solid #1f2937;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
     
-    .studio-header {
+    /* Tiêu đề rực rỡ */
+    .studio-title {
         font-size: 28px;
         font-weight: 800;
-        background: linear-gradient(90deg, #60a5fa, #c084fc);
+        background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
     }
     
-    .studio-sub {
+    .studio-subtitle {
         color: #94a3b8;
-        font-size: 15px;
-        margin-bottom: 24px;
+        font-size: 14px;
+        margin-bottom: 20px;
     }
 
-    /* Tùy chỉnh các Tab chuyển đổi mượt mà */
+    /* Tùy chỉnh các Tab chuyển đổi */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
+        gap: 8px;
         background-color: #0f172a;
-        padding: 8px;
-        border-radius: 12px;
+        padding: 6px;
+        border-radius: 10px;
         border: 1px solid #1e293b;
+        margin-bottom: 20px;
     }
     .stTabs [data-baseweb="tab"] {
-        height: 44px;
+        height: 38px;
         color: #94a3b8;
-        border-radius: 8px;
+        border-radius: 6px;
         font-weight: 600;
         background-color: transparent;
         border: none;
-        transition: all 0.3s ease;
-    }
-    .stTabs [data-baseweb="tab"]:hover {
-        color: #ffffff;
-        background-color: #1e293b;
+        padding: 0 16px;
     }
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+        background: #3b82f6 !important;
         color: white !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
     }
 
-    /* Tùy chỉnh nút bấm (Buttons) bắt mắt hơn */
+    /* Nút bấm */
     .stButton button {
-        border-radius: 10px;
+        border-radius: 8px;
         font-weight: 600;
         transition: all 0.2s ease;
     }
     
-    /* Khu vực File Uploader */
+    /* Khu vực File Uploader gọn gàng */
     [data-testid="stFileUploader"] {
-        background-color: #0f172a;
-        border: 2px dashed #334155;
-        border-radius: 12px;
-        padding: 20px;
+        background-color: #0b0f19;
+        border: 2px dashed #374151;
+        border-radius: 10px;
+        padding: 16px;
     }
     [data-testid="stFileUploader"]:hover {
         border-color: #3b82f6;
     }
     </style>
 """
-st.markdown(pro_studio_style, unsafe_allow_html=True)
+st.markdown(clean_studio_style, unsafe_allow_html=True)
 
 # --- SIDEBAR ĐIỀU HƯỞNG ---
 st.sidebar.markdown("### 🎬 VNahihi Hub")
-st.sidebar.caption("Pro Video Studio v2.5")
+st.sidebar.caption("Desktop Studio v2.5")
 
 menu = st.sidebar.radio(
     "🧭 Điều hướng",
@@ -142,16 +132,15 @@ model_size = st.sidebar.selectbox(
 )
 
 st.sidebar.markdown("---")
-st.sidebar.markdown("### 📂 Tiện Ích Nhanh")
 if st.sidebar.button("📁 Mở Thư Mục Ứng Dụng", use_container_width=True):
     os.system(r'explorer "C:\AppDichVideo"')
 
 
-# --- NỘI DUNG CHÍNH THEO MENU ---
+# --- NỘI DUNG CHÍNH ---
 if menu == "🎬 Không gian Sáng tạo (Studio)":
     
-    st.markdown('<div class="studio-header">🎬 VNahihi Studio - Biên Tập & Xử Lý Video AI</div>', unsafe_allow_html=True)
-    st.markdown('<div class="studio-sub">Hệ thống xử lý video thông minh chuẩn Studio. Thao tác mượt mà, giao diện hiện đại.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="studio-title">🎬 VNahihi Pro Studio - Trạm Sáng Tạo Video AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="studio-subtitle">Hệ thống xử lý video chuyên nghiệp, không giới hạn dung lượng, tối ưu đa người dùng.</div>', unsafe_allow_html=True)
 
     tab_upload, tab_link, tab_sub_editor, tab_tts, tab_marketing = st.tabs([
         "📤 1. Tải Lên Media", 
@@ -162,39 +151,39 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
     ])
 
     with tab_upload:
-        col_left, col_right = st.columns([1.2, 0.8], gap="large")
+        col_left, col_right = st.columns([1.3, 0.7], gap="large")
 
         with col_left:
             st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-            st.markdown("### 📂 Khu vực Tải lên Media")
+            st.markdown("### 📂 Khu vực Tải lên Media (Hỗ trợ 5GB+)")
             uploaded_file = st.file_uploader("Kéo thả hoặc chọn file video (MP4, MKV, AVI, MOV):", type=["mp4", "mov", "avi", "mkv"])
             
             if uploaded_file is not None:
-                st.success("✅ VNahihi đã nhận diện video thành công trên hệ thống.")
+                st.success("✅ Hệ thống đã nhận diện video thành công.")
                 video_size_mb = uploaded_file.size / (1024 * 1024)
-                st.info(f"Dung lượng file: **{video_size_mb:.2f} MB**. Sẵn sàng kích hoạt luồng xử lý AI.")
+                st.info(f"Dung lượng tệp: **{video_size_mb:.2f} MB**. Sẵn sàng khởi chạy quy trình AI.")
             st.markdown('</div>', unsafe_allow_html=True)
 
         with col_right:
             st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-            st.markdown("### ⚡ Trạng thái & Xuất bản")
-            st.write("Kiểm tra lại cấu hình trước khi khởi chạy tiến trình kết xuất (Render).")
+            st.markdown("### ⚡ Trạng thái & Kết xuất")
+            st.write("Kiểm tra thiết lập thông số trước khi xuất bản video chính thức.")
             
-            start_btn = st.button("🚀 BẮT ĐẦU KẾT XUẤT VIDEO (RENDER)", type="primary", use_container_width=True)
+            start_btn = st.button("🚀 BẮT ĐẦU XỬ LÝ VIDEO", type="primary", use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
         if uploaded_file is not None and start_btn:
             progress_bar = st.progress(0)
             status_text = st.empty()
             
-            status_text.text("VNahihi đang tối ưu hóa file video...")
+            status_text.text("Đang chuẩn bị bộ đệm xử lý video...")
             progress_bar.progress(15)
             
             tfile = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
             tfile.write(uploaded_file.read())
             video_path = tfile.name
             
-            status_text.text(f"VNahihi AI đang nhận dạng giọng nói bằng Whisper (Model: {model_size})...")
+            status_text.text(f"Đang bóc tách lời thoại bằng Whisper (Model: {model_size})...")
             progress_bar.progress(40)
             
             try:
@@ -203,12 +192,12 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                 full_text = result["text"]
                 segments = result["segments"]
             except Exception as e:
-                st.error(f"Lỗi khi chạy AI Whisper: {e}")
+                st.error(f"Lỗi xử lý Whisper: {e}")
                 st.stop()
             
             progress_bar.progress(70)
             
-            status_text.text("VNahihi đang tạo phụ đề chuẩn và nướng phụ đề cứng...")
+            status_text.text("Đang tạo phụ đề chuẩn và nướng phụ đề vào video...")
             srt_content = ""
             for i, segment in enumerate(segments, start=1):
                 start = segment["start"]
@@ -228,7 +217,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                 try:
                     cmd = f'ffmpeg -y -i "{video_path}" -vf "subtitles=\'C\\\\:/AppDichVideo/temp_sub.srt\'" -c:v libx264 -crf 18 -preset medium -c:a copy "{output_video_path}"'
                     res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-                    
                     if res.returncode == 0 and os.path.exists(output_video_path) and os.path.getsize(output_video_path) > 0:
                         has_burned_video = True
                     else:
@@ -240,18 +228,18 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                     st.error(f"Lỗi FFmpeg: {e}")
                     
             progress_bar.progress(100)
-            status_text.text("✅ VNahihi đã hoàn tất quá trình biên tập video!")
-            st.success("🎉 Dự án VNahihi đã xuất bản thành công!")
+            status_text.text("✅ Hoàn tất quá trình biên tập video!")
+            st.success("🎉 Dự án đã được kết xuất thành công!")
             
             st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-            st.subheader("📥 Trung tâm Tải xuống & Kết quả")
+            st.subheader("📥 Trung tâm Tải xuống Kết Quả")
             
             col_dl1, col_dl2 = st.columns(2)
             with col_dl1:
                 if has_burned_video and os.path.exists(output_video_path):
                     with open(output_video_path, "rb") as file_vid:
                         st.download_button(
-                            label="📥 Tải xuống Video hoàn chỉnh (VNahihi)",
+                            label="📥 Tải xuống Video hoàn chỉnh",
                             data=file_vid,
                             file_name="vnahihi_video_hoan_chinh.mp4",
                             mime="video/mp4",
@@ -259,14 +247,14 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                         )
             with col_dl2:
                 st.download_button(
-                    label="📥 Tải xuống file phụ đề (.srt)",
+                    label="📥 Tải xuống tệp phụ đề (.srt)",
                     data=srt_content,
                     file_name="vnahihi_phu_de.srt",
                     mime="text/plain",
                     use_container_width=True
                 )
                 
-            st.subheader("📝 Bản văn bản (Transcript):")
+            st.subheader("📝 Bản chép lời (Transcript):")
             st.text_area("Nội dung:", full_text, height=150)
             st.markdown('</div>', unsafe_allow_html=True)
             
@@ -284,34 +272,33 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
         st.subheader("📥 Tải video trực tiếp từ YouTube / TikTok / Facebook")
         video_url = st.text_input("Dán đường dẫn Video vào đây:", placeholder="https://www.youtube.com/watch?v=...")
         
-        if st.button("🚀 Bắt đầu Tải Video Về Máy"):
+        if st.button("🚀 Bắt đầu Tải Về Máy"):
             if video_url:
-                st.info("VNahihi đang tiến hành tải video về thư mục...")
+                st.info("Đang tiến hành tải xuống video...")
                 try:
                     cmd = f'yt-dlp -o "C:\\AppDichVideo\\downloaded_video.%(ext)s" "{video_url}"'
                     subprocess.run(cmd, shell=True, check=True)
-                    st.success("✅ Tải video thành công! File lưu tại: C:\\AppDichVideo\\downloaded_video.mp4")
+                    st.success("✅ Tải video thành công! Lưu tại: C:\\AppDichVideo\\downloaded_video.mp4")
                 except Exception as e:
-                    st.error(f"Lỗi khi tải video: {e}")
+                    st.error(f"Lỗi tải video: {e}")
             else:
-                st.warning("Vui lòng nhập đường dẫn video!")
+                st.warning("Vui lòng nhập đường dẫn video hợp lệ!")
         st.markdown('</div>', unsafe_allow_html=True)
 
     with tab_sub_editor:
         st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-        st.subheader("📝 Bảng Chỉnh Sửa Phụ Đề & Mã Thời Gian")
-        st.caption("Chỉnh sửa trực tiếp các từ AI nghe sai trước khi đóng dấu vào Video.")
+        st.subheader("📝 Bảng Biên Tập Phụ Đề & Thời Gian")
+        st.caption("Tinh chỉnh văn bản phụ đề trực tiếp trước khi xuất bản.")
         
         sample_subtitles = [
-            {"STT": 1, "Bắt đầu": "00:00:01", "Kết thúc": "00:00:04", "Nội dung": "Chào mừng bạn đến với hệ sinh thái VNahihi Studio!"},
-            {"STT": 2, "Bắt đầu": "00:00:05", "Kết thúc": "00:00:09", "Nội dung": "Hôm nay chúng ta sẽ trải nghiệm bộ công cụ AI thông minh."},
-            {"STT": 3, "Bắt đầu": "00:00:10", "Kết thúc": "00:00:14", "Nội dung": "Mọi tác vụ đều được xử lý mượt mà và an toàn trên thiết bị của bạn."}
+            {"STT": 1, "Bắt đầu": "00:00:01", "Kết thúc": "00:00:04", "Nội dung": "Chào mừng đến với VNahihi Pro Studio!"},
+            {"STT": 2, "Bắt đầu": "00:00:05", "Kết thúc": "00:00:09", "Nội dung": "Trải nghiệm hệ thống xử lý video AI tốc độ cao."},
+            {"STT": 3, "Bắt đầu": "00:00:10", "Kết thúc": "00:00:14", "Nội dung": "Mọi tác vụ đều mượt mà và an toàn."}
         ]
-        
         edited_df = st.data_editor(sample_subtitles, num_rows="dynamic", use_container_width=True)
         
-        if st.button("💾 Lưu File Phụ Đề Mới (.SRT)"):
-            st.success("✅ VNahihi đã lưu cấu hình phụ đề mới thành công!")
+        if st.button("💾 Lưu Cấu Hình Phụ Đề"):
+            st.success("✅ Đã lưu thay đổi phụ đề thành công!")
         st.markdown('</div>', unsafe_allow_html=True)
 
     async def generate_voice(text, voice_name, output_file):
@@ -325,49 +312,44 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
             "Chọn Giọng Đọc AI:",
             ["vi-VN-NamMinhNeural (Nam Tiếng Việt)", "vi-VN-HoaiMyNeural (Nữ Tiếng Việt)", "en-US-JennyNeural (Nữ Tiếng Anh)"]
         )
+        sample_text = st.text_area("Nhập văn bản cần lồng giọng:", "Chào mừng bạn đến với VNahihi Pro Studio.")
         
-        sample_text = st.text_area("Nhập văn bản kịch bản cần đọc thoại:", "Chào mừng bạn đã đến với VNahihi AI Studio.")
-        
-        if st.button("🔊 Nghe Thử & Tạo Giọng AI"):
+        if st.button("🔊 Nghe Thử & Tạo Giọng Đọc"):
             if sample_text:
                 voice_code = voice_option.split(" ")[0]
                 output_audio = "C:\\AppDichVideo\\test_voice.mp3"
-                
-                with st.spinner("VNahihi đang khởi tạo giọng đọc AI tự nhiên..."):
+                with st.spinner("Đang khởi tạo âm thanh AI..."):
                     try:
                         asyncio.run(generate_voice(sample_text, voice_code, output_audio))
                         st.audio(output_audio, format="audio/mp3")
-                        st.success("✅ Tạo giọng nói AI thành công!")
+                        st.success("✅ Tạo giọng đọc AI thành công!")
                     except Exception as e:
-                        st.error(f"Lỗi khi tạo giọng nói: {e}")
+                        st.error(f"Lỗi tạo giọng đọc: {e}")
         st.markdown('</div>', unsafe_allow_html=True)
 
     with tab_marketing:
         st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-        st.subheader("📊 Gợi Ý Tiêu Đề & Hashtag Viral Đăng Bài")
-        
-        if st.button("✨ Tạo Nội Dung Viral (TikTok / YouTube)"):
-            st.markdown("#### 🎯 Tiêu Đề Thu Hút Gợi Ý:")
-            st.write("1. 🔥 BÍ MẬT SÁNG TẠO VIDEO CỰC ĐỈNH CÙNG VNAHIHI!")
-            st.write("2. 🎬 Hướng Dẫn Tối Ưu Hóa Kênh Truyền Thông Tự Động")
-            
-            st.markdown("#### 📌 Danh Sành Hashtag Xu Hướng:")
-            st.code("#VNahihi #VNahihiStudio #AIVideo #Automation #ContentCreator", language="text")
+        st.subheader("📊 Gợi Ý Tiêu Đề & Hashtag Viral")
+        if st.button("✨ Tạo Ý Tưởng Đăng Bài"):
+            st.markdown("#### 🎯 Tiêu Đề Đề Xuất:")
+            st.write("1. 🔥 BÍ MẬT XỬ LÝ VIDEO NHANH GẤP 10 LẦN CÙNG VNAHIHI!")
+            st.write("2. 🎬 Khám phá ngay công cụ AI tự động hóa hoàn toàn")
+            st.markdown("#### 📌 Hashtag Xu Hướng:")
+            st.code("#VNahihi #ProStudio #AIVideo #ContentCreator #Automation", language="text")
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif menu == "📊 Quản lý & Thống kê":
-    st.markdown('<div class="studio-header">📊 Quản lý Dự án & Thống kê VNahihi</div>', unsafe_allow_html=True)
+    st.markdown('<div class="studio-title">📊 Quản lý Dự án & Thống kê</div>', unsafe_allow_html=True)
     st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-    st.info("Khu vực quản lý lịch sử xuất video và thống kê dung lượng hệ thống VNahihi.")
-    st.metric(label="Dung lượng bộ nhớ đệm tạm", value="0 MB", delta="Tối ưu hóa an toàn")
+    st.info("Hệ thống quản lý không gian lưu trữ và lịch sử xử lý video.")
+    st.metric(label="Bộ nhớ đệm tạm", value="0 MB", delta="Tối ưu hóa an toàn")
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif menu == "⚙️ Cài đặt Hệ thống":
-    st.markdown('<div class="studio-header">⚙️ Cài đặt Hệ thống VNahihi Studio</div>', unsafe_allow_html=True)
+    st.markdown('<div class="studio-title">⚙️ Cài đặt Hệ thống Studio</div>', unsafe_allow_html=True)
     st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-    st.write("- **Thương hiệu:** VNahihi AI Studio")
-    st.write("- **Phiên bản:** v2.5 Pro Studio Edition")
-    st.write("- **Vị trí lưu trữ:** `C:\\AppDichVideo`")
-    st.write("- **Bộ giải mã Video:** FFmpeg (libx264, CRF 18)")
-    st.write("- **Công cụ AI:** OpenAI Whisper & Edge-TTS")
+    st.write("- **Thương hiệu:** VNahihi Pro Studio")
+    st.write("- **Phiên bản:** v2.5 Desktop Edition")
+    st.write("- **Thư mục lưu trữ:** `C:\\AppDichVideo`")
+    st.write("- **Giới hạn tải lên:** 5GB+ (Đã cấu hình config.toml)")
     st.markdown('</div>', unsafe_allow_html=True)
