@@ -80,7 +80,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
     st.markdown('<div class="studio-header">🎬 VNahihi Studio - Biên Tập & Xử Lý Video AI</div>', unsafe_allow_html=True)
     st.markdown('<div class="studio-sub">Tải lên video hoặc dán đường dẫn trực tiếp. Hệ thống VNahihi tự động xử lý an toàn trên ổ cứng máy bạn.</div>', unsafe_allow_html=True)
 
-    # Chia các nhóm tính năng Studio thành 5 Tab
     tab_upload, tab_link, tab_sub_editor, tab_tts, tab_marketing = st.tabs([
         "📤 1. Tải Lên Media", 
         "📥 2. Tải Link Mạng Xã Hội", 
@@ -89,9 +88,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
         "📊 5. Tóm Tắt & SEO"
     ])
 
-    # ---------------------------------------------------------
-    # TAB 1: UPLOAD FILE TRỰC TIẾP & RENDER VIDEO
-    # ---------------------------------------------------------
     with tab_upload:
         col_left, col_right = st.columns([1.2, 0.8], gap="large")
 
@@ -114,12 +110,10 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
             start_btn = st.button("🚀 BẮT ĐẦU KẾT XUẤT VIDEO (RENDER)", type="primary", use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
-        # Tiến trình xử lý chính
         if uploaded_file is not None and start_btn:
             progress_bar = st.progress(0)
             status_text = st.empty()
             
-            # Bước 1: Lưu file tạm
             status_text.text("VNahihi đang tối ưu hóa file video trên ổ cứng...")
             progress_bar.progress(15)
             
@@ -127,7 +121,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
             tfile.write(uploaded_file.read())
             video_path = tfile.name
             
-            # Bước 2: Chạy Whisper AI
             status_text.text(f"VNahihi AI đang nhận dạng giọng nói bằng Whisper (Model: {model_size})...")
             progress_bar.progress(40)
             
@@ -142,7 +135,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
             
             progress_bar.progress(70)
             
-            # Bước 3: Đóng dấu phụ đề cứng với FFmpeg
             status_text.text("VNahihi đang tạo phụ đề chuẩn và nướng phụ đề cứng...")
             srt_content = ""
             for i, segment in enumerate(segments, start=1):
@@ -178,7 +170,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
             status_text.text("✅ VNahihi đã hoàn tất quá trình biên tập video!")
             st.success("🎉 Dự án VNahihi đã xuất bản thành công!")
             
-            # Trung tâm tải xuống
             st.markdown('<div class="studio-card">', unsafe_allow_html=True)
             st.subheader("📥 Trung tâm Tải xuống & Kết quả")
             
@@ -215,9 +206,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
             except:
                 pass
 
-    # ---------------------------------------------------------
-    # TAB 2: TẢI VIDEO TỪ LINK MẠNG XÃ HỘI (yt-dlp)
-    # ---------------------------------------------------------
     with tab_link:
         st.markdown('<div class="studio-card">', unsafe_allow_html=True)
         st.subheader("📥 Tải video trực tiếp từ YouTube / TikTok / Facebook")
@@ -236,9 +224,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                 st.warning("Vui lòng nhập đường dẫn video!")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # ---------------------------------------------------------
-    # TAB 3: TRÌNH CHỈNH SỬA PHỤ ĐỀ TRỰC TIẾP
-    # ---------------------------------------------------------
     with tab_sub_editor:
         st.markdown('<div class="studio-card">', unsafe_allow_html=True)
         st.subheader("📝 Bảng Chỉnh Sửa Phụ Đề & Mã Thời Gian")
@@ -256,9 +241,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
             st.success("✅ VNahihi đã lưu cấu hình phụ đề mới thành công!")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # ---------------------------------------------------------
-    # TAB 4: LỒNG GIỌNG NÓI AI (Edge-TTS)
-    # ---------------------------------------------------------
     async def generate_voice(text, voice_name, output_file):
         communicate = edge_tts.Communicate(text, voice_name)
         await communicate.save(output_file)
@@ -287,9 +269,6 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                         st.error(f"Lỗi khi tạo giọng nói (Cần cài edge-tts): {e}")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # ---------------------------------------------------------
-    # TAB 5: CREATOR SEO & MARKETING
-    # ---------------------------------------------------------
     with tab_marketing:
         st.markdown('<div class="studio-card">', unsafe_allow_html=True)
         st.subheader("📊 Gợi Ý Tiêu Đề & Hashtag Viral Đăng Bài")
@@ -308,4 +287,14 @@ elif menu == "📊 Quản lý & Thống kê":
     st.markdown('<div class="studio-card">', unsafe_allow_html=True)
     st.info("Khu vực quản lý lịch sử xuất video và thống kê dung lượng hệ thống VNahihi.")
     st.metric(label="Dung lượng bộ nhớ đệm tạm", value="0 MB", delta="Tối ưu hóa an toàn trên ổ C")
-    st.markdown('</div>', unsafe_allow
+    st.markdown('</div>', unsafe_allow_html=True)
+
+elif menu == "⚙️ Cài đặt Hệ thống":
+    st.markdown('<div class="studio-header">⚙️ Cài đặt Hệ thống VNahihi Studio</div>', unsafe_allow_html=True)
+    st.markdown('<div class="studio-card">', unsafe_allow_html=True)
+    st.write("- **Thương hiệu:** VNahihi AI Studio")
+    st.write("- **Phiên bản:** v2.5 Official")
+    st.write("- **Vị trí lưu trữ:** `C:\\AppDichVideo`")
+    st.write("- **Bộ giải mã Video:** FFmpeg (libx264, CRF 18)")
+    st.write("- **Công cụ AI:** OpenAI Whisper & Edge-TTS")
+    st.markdown('</div>', unsafe_allow_html=True)
