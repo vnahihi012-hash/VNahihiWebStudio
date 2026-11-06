@@ -13,6 +13,15 @@ st.set_page_config(
     layout="wide"
 )
 
+# Chèn thẻ Meta HTML để đổi tên khi chia sẻ link lên mạng xã hội/chat
+st.markdown("""
+    <head>
+        <meta property="title" content="VNahihi - AI Video Studio">
+        <meta property="og:title" content="VNahihi - AI Video Studio">
+        <meta property="og:description" content="Hệ thống biên tập và xử lý video thông minh VNahihi Studio">
+    </head>
+""", unsafe_allow_html=True)
+
 # 2. Tùy chỉnh CSS: Ẩn hoàn toàn menu 3 chấm, chân trang và header của Streamlit
 hide_streamlit_style = """
     <style>
@@ -201,100 +210,4 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                 tfile.close()
                 if os.path.exists(video_path):
                     os.unlink(video_path)
-                if os.path.exists(local_srt_path):
-                    os.remove(local_srt_path)
-            except:
-                pass
-
-    with tab_link:
-        st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-        st.subheader("📥 Tải video trực tiếp từ YouTube / TikTok / Facebook")
-        video_url = st.text_input("Dán đường dẫn Video vào đây:", placeholder="https://www.youtube.com/watch?v=...")
-        
-        if st.button("🚀 Bắt đầu Tải Video Về Máy"):
-            if video_url:
-                st.info("VNahihi đang tiến hành tải video về thư mục C:\\AppDichVideo...")
-                try:
-                    cmd = f'yt-dlp -o "C:\\AppDichVideo\\downloaded_video.%(ext)s" "{video_url}"'
-                    subprocess.run(cmd, shell=True, check=True)
-                    st.success("✅ Tải video thành công! File lưu tại: C:\\AppDichVideo\\downloaded_video.mp4")
-                except Exception as e:
-                    st.error(f"Lỗi khi tải video (Cần cài yt-dlp): {e}")
-            else:
-                st.warning("Vui lòng nhập đường dẫn video!")
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    with tab_sub_editor:
-        st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-        st.subheader("📝 Bảng Chỉnh Sửa Phụ Đề & Mã Thời Gian")
-        st.caption("Chỉnh sửa trực tiếp các từ AI nghe sai trước khi đóng dấu vào Video.")
-        
-        sample_subtitles = [
-            {"STT": 1, "Bắt đầu": "00:00:01", "Kết thúc": "00:00:04", "Nội dung": "Chào mừng bạn đến với hệ sinh thái VNahihi Studio!"},
-            {"STT": 2, "Bắt đầu": "00:00:05", "Kết thúc": "00:00:09", "Nội dung": "Hôm nay chúng ta sẽ trải nghiệm bộ công cụ AI thông minh."},
-            {"STT": 3, "Bắt đầu": "00:00:10", "Kết thúc": "00:00:14", "Nội dung": "Mọi tác vụ đều được xử lý mượt mà và an toàn trên thiết bị của bạn."}
-        ]
-        
-        edited_df = st.data_editor(sample_subtitles, num_rows="dynamic", use_container_width=True)
-        
-        if st.button("💾 Lưu File Phụ Đề Mới (.SRT)"):
-            st.success("✅ VNahihi đã lưu cấu hình phụ đề mới thành công!")
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    async def generate_voice(text, voice_name, output_file):
-        communicate = edge_tts.Communicate(text, voice_name)
-        await communicate.save(output_file)
-
-    with tab_tts:
-        st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-        st.subheader("🗣️ Lồng Giọng Thuyết Minh AI Đa Ngôn Ngữ")
-        voice_option = st.selectbox(
-            "Chọn Giọng Đọc AI:",
-            ["vi-VN-NamMinhNeural (Nam Tiếng Việt)", "vi-VN-HoaiMyNeural (Nữ Tiếng Việt)", "en-US-JennyNeural (Nữ Tiếng Anh)"]
-        )
-        
-        sample_text = st.text_area("Nhập văn bản kịch bản cần đọc thoại:", "Chào mừng bạn đã đến với VNahihi AI Studio.")
-        
-        if st.button("🔊 Nghe Thử & Tạo Giọng AI"):
-            if sample_text:
-                voice_code = voice_option.split(" ")[0]
-                output_audio = "C:\\AppDichVideo\\test_voice.mp3"
-                
-                with st.spinner("VNahihi đang khởi tạo giọng đọc AI tự nhiên..."):
-                    try:
-                        asyncio.run(generate_voice(sample_text, voice_code, output_audio))
-                        st.audio(output_audio, format="audio/mp3")
-                        st.success("✅ Tạo giọng nói AI thành công!")
-                    except Exception as e:
-                        st.error(f"Lỗi khi tạo giọng nói (Cần cài edge-tts): {e}")
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    with tab_marketing:
-        st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-        st.subheader("📊 Gợi Ý Tiêu Đề & Hashtag Viral Đăng Bài")
-        
-        if st.button("✨ Tạo Nội Dung Viral (TikTok / YouTube)"):
-            st.markdown("#### 🎯 Tiêu Đề Thu Hút Gợi Ý:")
-            st.write("1. 🔥 BÍ MẬT SÁNG TẠO VIDEO CỰC ĐỈNH CÙNG VNAHIHI!")
-            st.write("2. 🎬 Hướng Dẫn Tối Ưu Hóa Kênh Truyền Thông Tự Động")
-            
-            st.markdown("#### 📌 Danh Sách Hashtag Xu Hướng:")
-            st.code("#VNahihi #VNahihiStudio #AIVideo #Automation #ContentCreator", language="text")
-        st.markdown('</div>', unsafe_allow_html=True)
-
-elif menu == "📊 Quản lý & Thống kê":
-    st.markdown('<div class="studio-header">📊 Quản lý Dự án & Thống kê VNahihi</div>', unsafe_allow_html=True)
-    st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-    st.info("Khu vực quản lý lịch sử xuất video và thống kê dung lượng hệ thống VNahihi.")
-    st.metric(label="Dung lượng bộ nhớ đệm tạm", value="0 MB", delta="Tối ưu hóa an toàn trên ổ C")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-elif menu == "⚙️ Cài đặt Hệ thống":
-    st.markdown('<div class="studio-header">⚙️ Cài đặt Hệ thống VNahihi Studio</div>', unsafe_allow_html=True)
-    st.markdown('<div class="studio-card">', unsafe_allow_html=True)
-    st.write("- **Thương hiệu:** VNahihi AI Studio")
-    st.write("- **Phiên bản:** v2.5 Official")
-    st.write("- **Vị trí lưu trữ:** `C:\\AppDichVideo`")
-    st.write("- **Bộ giải mã Video:** FFmpeg (libx264, CRF 18)")
-    st.write("- **Công cụ AI:** OpenAI Whisper & Edge-TTS")
-    st.markdown('</div>', unsafe_allow_html=True)
+                if os
