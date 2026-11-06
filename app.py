@@ -185,13 +185,13 @@ if menu == "🎬 Không gian Sáng tạo (Studio)":
                             use_container_width=True
                         )
             with col_dl2:
-st.download_button(
-    label="📥 Tải xuống file phụ đề (.srt)",
-    data=srt_content,
-    file_name="vnahihi_phu_de.srt",
-    mime="text/plain",
-    use_container_width=True
-)
+                st.download_button(
+                    label="📥 Tải xuống file phụ đề (.srt)",
+                    data=srt_content,
+                    file_name="vnahihi_phu_de.srt",
+                    mime="text/plain",
+                    use_container_width=True
+                )
                 
             st.subheader("📝 Bản văn bản (Transcript):")
             st.text_area("Nội dung:", full_text, height=150)
